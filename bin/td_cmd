@@ -1,0 +1,27 @@
+#!/usr/bin/env lua
+-- -*- lua -*-
+
+_G._DEBUG          = false
+local sort         = table.sort
+local posix        = require("posix")
+Version = "0.0"
+
+require("strict")
+require("capture")
+require("fileOps")
+
+function main()
+   if (not isDir("./t1")) then
+      print("Not in correct directory")
+      return
+   end
+
+   local fileA = posix.dirent.dir("./t1")
+   sort(fileA)
+   local s = "cd t1/"..fileA[#fileA].."\n"
+   io.stderr:write(s)
+   io.stdout:write(s)
+end
+
+
+main()

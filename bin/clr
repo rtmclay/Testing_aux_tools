@@ -1,0 +1,46 @@
+#!/bin/bash
+# -*- shell-script -*-
+
+cwd=$PWD
+projectDir=''
+done=0
+prev=''
+while [ $done != 1 ]; do
+  if [ -f Hermes.db ]; then
+    done=1
+    cmdA=( "$HOME/w/hermes/bin/testcleanup" "testcleanup" )
+    projectDir=$PWD
+  elif [ -f Themis.py ]; then
+    done=1
+    cmdA=("$HOME/w/themis/bin/clr_themis" "clr_themis")
+    kind=""
+    projectDir=$PWD
+  else
+    prev=$PWD
+    cd ..
+    if [ $PWD = '/' -o $prev = $PWD ]; then
+      echo Did not find 'Hermes.db or Themis.py', you must be in a project
+      exit 1
+    fi
+  fi
+done
+
+cmd="Unknown"
+
+for i in "${cmdA[@]}"; do
+  type $i > /dev/null 2>&1
+  if [ "$?" = 0 ]; then 
+    cmd=$i
+    break
+  fi
+done
+
+if [ $cmd = "Unknown" ]; then
+  echo "No matching command found"
+  exit 1;
+fi
+
+cd $cwd
+
+echo $cmd
+$cmd

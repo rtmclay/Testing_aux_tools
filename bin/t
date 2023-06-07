@@ -1,0 +1,45 @@
+#!/bin/bash
+# -*- shell-script -*-
+
+cwd=$PWD
+done=0
+prev=''
+while [ $done != 1 ]; do
+  if [ -f Hermes.db ]; then
+    done=1
+    cmdA=( "$HOME/w/hermes/bin/tm" "tm" )
+  elif [ -f Themis.py ]; then
+    done=1
+    cmdA=( "$HOME/w/themis/bin/rtm" "rtm" )
+  else
+    prev=$PWD
+    cd ..
+    if [ $PWD = '/' -o $prev = $PWD ]; then
+      echo Did not find 'Hermes.db or Themis.py', you must be in a project
+      exit 1;
+    fi
+  fi
+done
+
+cd $cwd
+
+cmd="Unknown"
+
+for i in "${cmdA[@]}"; do
+  type $i > /dev/null 2>&1
+  echo $i
+  if [ "$?" = 0 ]; then 
+    cmd=$i
+    break
+  fi
+done
+
+if [ $cmd = "Unknown" ]; then
+  
+  echo "Did not find command to run tests => exiting"
+  exit 1;
+fi
+
+echo $cmd "$@"
+$cmd "$@"
+
