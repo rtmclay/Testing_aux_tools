@@ -27,7 +27,6 @@ cmd="Unknown"
 
 for i in "${cmdA[@]}"; do
   type $i > /dev/null 2>&1
-  echo $i
   if [ "$?" = 0 ]; then 
     cmd=$i
     break
