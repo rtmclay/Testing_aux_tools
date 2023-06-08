@@ -12,7 +12,7 @@ require("fileOps")
 
 function main()
    if (not isDir("./t1")) then
-      io.stderr:write("Not in correct directory -> exiting\n")
+      io.stderr:write("Did not find ./t1 directory. Not in correct directory? -> exiting\n")
       return
    end
 
