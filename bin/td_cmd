@@ -4,12 +4,24 @@
 _G._DEBUG          = false
 local sort         = table.sort
 local posix        = require("posix")
+local stat         = posix.stat
 Version = "0.0"
 
-require("strict")
-require("capture")
-require("fileOps")
+function isDir(d)
+   if (d == nil) then return false end
+   local t = stat(d,"type")
 
+   -- If the file is a link then adding a '/' on the end
+   -- seems to tell stat to resolve the link to its final link.
+   if (t == "link") then
+      d = d .. '/'
+      t = stat(d,"type")
+   end
+
+   local result = (t == "directory")
+
+   return result
+end
 function main()
    if (not isDir("./t1")) then
       io.stderr:write("Did not find ./t1 directory. Not in correct directory? -> exiting\n")

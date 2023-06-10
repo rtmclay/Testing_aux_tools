@@ -38,6 +38,11 @@ function bannerMsg ()
   echo ""
 }
 
+function up ()
+{
+  [ $(( ${1:-1} + 0 )) -gt 0 ] && cd $(eval "printf '../'%.0s {1..$1}") && pwd 
+}
+
 function rs ()
 {
   run_script "$@"
