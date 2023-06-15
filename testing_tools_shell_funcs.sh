@@ -46,6 +46,11 @@ function bannerMsg ()
   echo ""
 }
 
+function up ()
+{
+  [ $(( ${1:-1} + 0 )) -gt 0 ] && cd $(eval "printf '../'%.0s {1..$1}") && pwd 
+}
+
 function rs ()
 {
   run_script "$@"
@@ -56,7 +61,7 @@ function run_script ()
   if [ -d t1 ]; then
     bannerMsg "$PWD: rm -rf t1; t ."
     rm -rf t1; t .
-  elif [ -f *.tdesc -o -f *.desc ]; then
+  elif [[ -f *.tdesc || -f *.desc ]]; then
     bannerMsg "$PWD: t ."
     t .
   elif [ -f ./${t1:-t1}.script ]; then
