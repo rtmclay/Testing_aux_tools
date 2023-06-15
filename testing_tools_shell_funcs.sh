@@ -1,13 +1,21 @@
+#!/bin/bash
+# -*- shell-script -*-
+
 LOC=$0
 if [ -n "${BASH_SOURCE:-}" ]; then
   LOC=$BASH_SOURCE
 fi
+
+if [ "$LOC" = "try.sh" -o "$LOC" = "./try.sh" ]; then
+   LOC=$PWD/try.sh
+fi  
 
 DIR="${LOC%/*}"
 first=${DIR:0:1}
 if [ $first != '/' ]; then
    DIR=$PWD/$DIR
 fi
+DIR=$(echo $DIR | sed -e 's|//\+|/|g' -e 's|/\./|/|g' -e 's|/\.$||' -e 's|/$||')
 
 if [ -n "${ZSH_VERSION:-}" ]; then
    type()
