@@ -28,7 +28,7 @@ function main()
       return
    end
 
-   local fileA = posix.dirent.dir("./t1")
+   local fileA, errstr, errno = posix.dir("./t1")
    sort(fileA)
    local lastFn = fileA[#fileA]
    if ( lastFn:sub(1,1) == "." ) then
