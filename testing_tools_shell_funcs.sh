@@ -6,7 +6,7 @@ if [ -n "${BASH_SOURCE:-}" ]; then
   LOC=$BASH_SOURCE
 fi
 
-if [ "$LOC" = "try.sh" -o "$LOC" = "./try.sh" ]; then
+if [ "$LOC" = "testing_tools_shell_funcs.sh" -o "$LOC" = "./testing_tools_shell_funcs.sh" ]; then
    LOC=$PWD/try.sh
 fi  
 
