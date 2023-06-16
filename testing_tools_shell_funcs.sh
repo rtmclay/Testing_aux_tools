@@ -7,7 +7,7 @@ if [ -n "${BASH_SOURCE:-}" ]; then
 fi
 
 if [ "$LOC" = "testing_tools_shell_funcs.sh" -o "$LOC" = "./testing_tools_shell_funcs.sh" ]; then
-   LOC=$PWD/try.sh
+   LOC=$PWD/testing_tools_shell_funcs.sh
 fi  
 
 DIR="${LOC%/*}"
