@@ -4,22 +4,24 @@
 cwd=$PWD
 projectDir=''
 done=0
+kind="unknown"
 prev=''
 while [ $done != 1 ]; do
   if [ -f Hermes.db ]; then
     done=1
     cmdA=( "$HOME/w/hermes/bin/testcleanup" "testcleanup" )
     projectDir=$PWD
+    kind="hermes"
   elif [ -f Themis.py ]; then
     done=1
     cmdA=("$HOME/w/themis/bin/clr_themis" "clr_themis")
-    kind=""
     projectDir=$PWD
+    kind="themis"
   else
     prev=$PWD
     cd ..
     if [ $PWD = '/' -o $prev = $PWD ]; then
-      echo Did not find 'Hermes.db or Themis.py', you must be in a project
+      echo "Did not find 'Hermes.db or Themis.py', you must be in a project"
       exit 1
     fi
   fi
@@ -36,7 +38,7 @@ for i in "${cmdA[@]}"; do
 done
 
 if [ $cmd = "Unknown" ]; then
-  echo "No matching command found"
+  echo "No matching command found for $kind"
   exit 1;
 fi
 
