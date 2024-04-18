@@ -1,0 +1,62 @@
+#!/bin/bash
+# -*- shell-script -*-
+
+arg1=$1
+
+
+autohdr()
+{
+  grep -q AC_CONFIG_H configure.ac
+  if [ "$?" -eq 0 ]; then
+    autoheader $1
+  fi
+}
+
+
+cmdA=( "autoconf $arg1"
+       "autohdr  $arg1")
+
+
+runMe()
+{
+  local cmdA=("$@")
+
+  local j
+  local jj
+  local i
+  local ignoreError
+  local j=0
+  local echoMe=1
+  for i in "${cmdA[@]}" ; do
+    ignoreError=
+    firstL=${i:0:1}
+    if [ "x$firstL" = x- ]; then
+      i=${i:1}
+      ignoreError=1
+    fi
+    if [ "x$firstL" = 'x@' ]; then
+      i=${i:1}
+      echoMe=0
+    fi
+      
+    if [ "$echoMe" != 0 ]; then
+      j=$((j+1))
+      jj=$(printf "%02d" $j)
+      echo
+      echo "%%---------------------------------%%"
+      echo "   " $jj: $i
+      echo "%%---------------------------------%%"
+      echo
+    fi
+
+    eval $i
+    #$i
+    if [ -z "$ignoreError" -a $? != 0 ]; then
+      break
+    fi
+  done
+}
+
+runMe "${cmdA[@]}"
+
+rm -rf autom4te*.cache
