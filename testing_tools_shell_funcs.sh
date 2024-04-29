@@ -1,21 +1,11 @@
 #!/bin/bash
 # -*- shell-script -*-
+SCRIPT_NAME="${BASH_SOURCE[0]:-${(%):-%x}}"
+SCRIPT_DIR=${SCRIPT_NAME%/*}
 
-LOC=$0
-if [ -n "${BASH_SOURCE:-}" ]; then
-  LOC=$BASH_SOURCE
-fi
-
-if [ "$LOC" = "testing_tools_shell_funcs.sh" -o "$LOC" = "./testing_tools_shell_funcs.sh" ]; then
-   LOC=$PWD/testing_tools_shell_funcs.sh
+if [ $SCRIPT_DIR = "." ]; then
+  SCRIPT_DIR=$PWD
 fi  
-
-DIR="${LOC%/*}"
-first=${DIR:0:1}
-if [ $first != '/' ]; then
-   DIR=$PWD/$DIR
-fi
-DIR=$(echo $DIR | sed -e 's|//\+|/|g' -e 's|/\./|/|g' -e 's|/\.$||' -e 's|/$||')
 
 if [ -n "${ZSH_VERSION:-}" ]; then
    type()
@@ -32,7 +22,7 @@ fi
 
 type td_cmd > /dev/null 2>&1
 if [ "$?" != 0 ]; then
-  export PATH=$DIR/bin:$PATH
+  export PATH=$SCRIPT_DIR/bin:$PATH
 fi
 
 function bannerMsg ()
