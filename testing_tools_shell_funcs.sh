@@ -55,7 +55,7 @@ function run_script ()
     bannerMsg "$PWD: t ."
     t .
   elif [ -f ./${t1:-t1}.script ]; then
-    ( . ./${t1:-t1}.script ) 2>&1 | tee ${t1:-t1}.log 
+    bash ./${t1:-t1}.script 2>&1 | tee ${t1:-t1}.log 
     [ -f results.csv ] && cat results.csv
   else
     echo "Wrong directory!"
