@@ -48,17 +48,17 @@ function rs ()
 
 function run_script ()
 {
+  t1Script=./${t1:-t1}.script
   if [ -d t1 ]; then
     bannerMsg "$PWD: rm -rf t1; t ."
     rm -rf t1; t .
   elif [ -n "$(find . -maxdepth 1 -name '*.*desc')" ]; then
     bannerMsg "$PWD: t ."
     t .
-  elif [ -f ./${t1:-t1}.script ]; then
+  elif [ -f "$t1Script" ]; then
     parentFn=$(find ../.. -maxdepth 1 -name '*.*desc')
-    t1Script=./${t1:-t1}.script
-    if [ "$parentFn" -ot $t1Script ]; then
-      bash ./${t1:-t1}.script 2>&1 | tee ${t1:-t1}.log 
+    if [ "$parentFn" -ot "$t1Script" ]; then
+      bash $t1Script 2>&1 | tee ${t1:-t1}.log 
       [ -f results.csv ] && cat results.csv
     else
       echo "$t1Script is out of date"
